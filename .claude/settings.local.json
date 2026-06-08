@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node \"C:\\\\Users\\\\rafae\\\\.claude\\\\skills\\\\config-project-fullstack\\\\scripts\\\\setup.js\" \"novo-projeto\" \"novo-projeto\")",
+      "Bash(node \"C:\\\\Users\\\\rafae\\\\.claude\\\\skills\\\\config-project-fullstack\\\\scripts\\\\apply-namespace.js\" \"c:\\\\Users\\\\rafae\\\\Dropbox\\\\Coders\\\\projeto\\\\novo-projeto\\\\novo-projeto\" \"novo-projeto\")",
+      "Bash(node \"C:\\\\Users\\\\rafae\\\\.claude\\\\skills\\\\config-project-fullstack\\\\scripts\\\\verify.js\" \"c:\\\\Users\\\\rafae\\\\Dropbox\\\\Coders\\\\projeto\\\\novo-projeto\\\\novo-projeto\")",
+      "Bash(Get-ChildItem -Recurse \"c:\\\\Users\\\\rafae\\\\Dropbox\\\\Coders\\\\projeto\\\\novo-projeto\\\\modules\")",
+      "Bash(Select-Object FullName)"
+    ]
+  }
+}
