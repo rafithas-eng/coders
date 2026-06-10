@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm test *)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(taskkill /PID 17020 /F)",
+      "PowerShell(Stop-Process -Id 17020 -Force)",
+      "Bash(Select-String -Path \"c:\\\\Users\\\\rafae\\\\Dropbox\\\\Coders\\\\projeto\\\\novo-projeto\\\\apps\\\\frontend\\\\.next\\\\dev\\\\types\\\\validator.ts\" -Pattern \"Auth|auth\")",
+      "Bash(Select-Object -First 20)",
+      "Bash(rm -rf \"c:\\\\Users\\\\rafae\\\\Dropbox\\\\Coders\\\\projeto\\\\novo-projeto\\\\apps\\\\frontend\\\\.next\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\rafae\\Dropbox\\Coders\\projeto\\novo-projeto\\apps\\frontend\\.next"
+    ]
+  }
+}

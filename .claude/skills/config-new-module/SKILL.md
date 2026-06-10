@@ -40,7 +40,17 @@ O que a skill faz (resumo dos passos):
 
 (Substitui `@novo-projeto` pelo `@namespace` informado.)
 
-7. Executa `npm install` na raiz, depois `npm run build` e, por fim, executa os testes do módulo criado (`npm test` dentro do módulo).
+7. Cria o módulo NestJS em `apps/backend/src/modules/<nome-do-modulo>/`:
+   - `<nome-do-modulo>.module.ts` — `@Module` com o controller registrado
+   - `<nome-do-modulo>.controller.ts` — `@Controller('<nome-do-modulo>')` com um `@Get()` que retorna uma mensagem padrão
+   - Registra `<NomeDoModulo>Module` no `imports` de `apps/backend/src/app.module.ts`
+
+8. Cria a estrutura do módulo no frontend em `apps/frontend/src/`:
+   - `app/(private)/<nome-do-modulo>/page.tsx` — rota privada que renderiza a página principal
+   - `modules/<nome-do-modulo>/pages/<nome-do-modulo>.page.tsx` — página principal que renderiza o componente
+   - `modules/<nome-do-modulo>/components/<nome-do-modulo>.component.tsx` — componente principal do módulo
+
+9. Executa `npm install` na raiz, depois `npm run build` e, por fim, executa os testes do módulo criado (`npm test` dentro do módulo).
 
 Arquivos criados em `modules/<nome-do-modulo>` (determinísticos):
 - `jest.config.ts`
@@ -48,6 +58,15 @@ Arquivos criados em `modules/<nome-do-modulo>` (determinísticos):
 - `package.json` (com `name` = `@<NAMESPACE>/<nome-do-modulo>` e scripts mínimos)
 - `src/index.ts` (entry)
 - `test/index.test.ts`
+
+Arquivos criados em `apps/backend/src/modules/<nome-do-modulo>` (NestJS):
+- `<nome-do-modulo>.module.ts`
+- `<nome-do-modulo>.controller.ts` (endpoint `GET /<nome-do-modulo>` → mensagem padrão)
+
+Arquivos criados em `apps/frontend/src/` (Next.js):
+- `app/(private)/<nome-do-modulo>/page.tsx` — rota privada
+- `modules/<nome-do-modulo>/pages/<nome-do-modulo>.page.tsx` — página principal
+- `modules/<nome-do-modulo>/components/<nome-do-modulo>.component.tsx` — componente principal
 
 Observações de segurança e operação:
 - A skill altera `package.json` de apps existentes; confirme o commit depois de revisar.

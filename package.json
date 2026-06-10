@@ -2,6 +2,7 @@
   "name": "@novo-projeto",
   "private": true,
   "scripts": {
+    "predev": "kill-port 3000 3005",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
@@ -9,6 +10,7 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "kill-port": "^2.0.1",
     "prettier": "^3.7.4",
     "turbo": "^2.9.16",
     "typescript": "5.9.2",
@@ -22,8 +24,5 @@
     "apps/*",
     "packages/*",
     "modules/*"
-  ],
-  "dependencies": {
-    "ts-node": "^10.9.2"
-  }
+  ]
 }
