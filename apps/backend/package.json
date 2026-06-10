@@ -27,8 +27,9 @@
     "@nestjs/platform-express": "^11.0.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "@novo-projeto/auth": "*",
-    "@novo-projeto/transaction": "*"
+    "@novo-projeto/transaction": "*",
+    "@novo-projeto/reports": "*",
+    "@novo-projeto/auth": "*"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

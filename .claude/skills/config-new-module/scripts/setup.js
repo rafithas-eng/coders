@@ -112,7 +112,108 @@ for (const rel of apps) {
   }
 }
 
-// 6. Run npm install, build and tests
+// 6. Create NestJS module in apps/backend/src/modules/<moduleName>
+function toPascalCase(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+const modulePascal = toPascalCase(moduleName)
+const nestModuleDir = path.join(repoRoot, 'apps', 'backend', 'src', 'modules', moduleName)
+
+if (!fs.existsSync(nestModuleDir)) {
+  fs.mkdirSync(nestModuleDir, { recursive: true })
+}
+
+const nestTemplatesDir = path.join(assetsDir, 'nestjs')
+
+const nestModuleContent = fs.readFileSync(path.join(nestTemplatesDir, 'module.ts.template'), 'utf8')
+  .replace(/{{MODULE_PASCAL}}/g, modulePascal)
+  .replace(/{{MODULE}}/g, moduleName)
+const nestModuleFile = path.join(nestModuleDir, `${moduleName}.module.ts`)
+fs.writeFileSync(nestModuleFile, nestModuleContent, 'utf8')
+log('Criado', path.relative(repoRoot, nestModuleFile))
+
+const nestControllerContent = fs.readFileSync(path.join(nestTemplatesDir, 'controller.ts.template'), 'utf8')
+  .replace(/{{MODULE_PASCAL}}/g, modulePascal)
+  .replace(/{{MODULE}}/g, moduleName)
+const nestControllerFile = path.join(nestModuleDir, `${moduleName}.controller.ts`)
+fs.writeFileSync(nestControllerFile, nestControllerContent, 'utf8')
+log('Criado', path.relative(repoRoot, nestControllerFile))
+
+// Register module in apps/backend/src/app.module.ts
+const appModulePath = path.join(repoRoot, 'apps', 'backend', 'src', 'app.module.ts')
+let appModuleContent = fs.readFileSync(appModulePath, 'utf8')
+
+if (!appModuleContent.includes(`${modulePascal}Module`)) {
+  const importLine = `import { ${modulePascal}Module } from './modules/${moduleName}/${moduleName}.module';`
+
+  // Insert import after last import statement
+  const lines = appModuleContent.split('\n')
+  let lastImportIdx = -1
+  for (let i = 0; i < lines.length; i++) {
+    if (/^import\s/.test(lines[i])) lastImportIdx = i
+  }
+  if (lastImportIdx >= 0) {
+    lines.splice(lastImportIdx + 1, 0, importLine)
+    appModuleContent = lines.join('\n')
+  }
+
+  // Add to imports array: find closing ] of the imports: [...] block via bracket tracking
+  const importsStart = appModuleContent.indexOf('imports: [')
+  if (importsStart >= 0) {
+    let depth = 0
+    let closeIdx = -1
+    for (let i = importsStart; i < appModuleContent.length; i++) {
+      if (appModuleContent[i] === '[') depth++
+      else if (appModuleContent[i] === ']') {
+        depth--
+        if (depth === 0) { closeIdx = i; break }
+      }
+    }
+    if (closeIdx >= 0) {
+      const lineStart = appModuleContent.lastIndexOf('\n', closeIdx)
+      appModuleContent =
+        appModuleContent.slice(0, lineStart) +
+        `\n    ${modulePascal}Module,` +
+        appModuleContent.slice(lineStart)
+    }
+  }
+
+  fs.writeFileSync(appModulePath, appModuleContent, 'utf8')
+  log('Atualizado apps/backend/src/app.module.ts')
+}
+
+// 7. Create frontend structure in apps/frontend
+const frontendTemplatesDir = path.join(assetsDir, 'frontend')
+
+function renderTemplate(templatePath, replacements) {
+  let content = fs.readFileSync(templatePath, 'utf8')
+  for (const [key, value] of Object.entries(replacements)) {
+    content = content.replace(new RegExp(key, 'g'), value)
+  }
+  return content
+}
+
+const replacements = { '{{MODULE_PASCAL}}': modulePascal, '{{MODULE}}': moduleName }
+
+const frontendRouteDir = path.join(repoRoot, 'apps', 'frontend', 'src', 'app', '(private)', moduleName)
+fs.mkdirSync(frontendRouteDir, { recursive: true })
+const routeContent = renderTemplate(path.join(frontendTemplatesDir, 'route.page.tsx.template'), replacements)
+fs.writeFileSync(path.join(frontendRouteDir, 'page.tsx'), routeContent, 'utf8')
+log('Criado', path.relative(repoRoot, path.join(frontendRouteDir, 'page.tsx')))
+
+const frontendPagesDir = path.join(repoRoot, 'apps', 'frontend', 'src', 'modules', moduleName, 'pages')
+fs.mkdirSync(frontendPagesDir, { recursive: true })
+const pageContent = renderTemplate(path.join(frontendTemplatesDir, 'page.tsx.template'), replacements)
+fs.writeFileSync(path.join(frontendPagesDir, `${moduleName}.page.tsx`), pageContent, 'utf8')
+log('Criado', path.relative(repoRoot, path.join(frontendPagesDir, `${moduleName}.page.tsx`)))
+
+const frontendComponentsDir = path.join(repoRoot, 'apps', 'frontend', 'src', 'modules', moduleName, 'components')
+fs.mkdirSync(frontendComponentsDir, { recursive: true })
+const componentContent = renderTemplate(path.join(frontendTemplatesDir, 'component.tsx.template'), replacements)
+fs.writeFileSync(path.join(frontendComponentsDir, `${moduleName}.component.tsx`), componentContent, 'utf8')
+log('Criado', path.relative(repoRoot, path.join(frontendComponentsDir, `${moduleName}.component.tsx`)))
+
+// 8. Run npm install, build and tests
 try {
   log('Executando: npm install (raiz)')
   child.execSync('npm install', { cwd: repoRoot, stdio: 'inherit' })

@@ -1,0 +1,5 @@
+import {{MODULE_PASCAL}}Page from "@/modules/{{MODULE}}/pages/{{MODULE}}.page";
+
+export default function {{MODULE_PASCAL}}RoutePage() {
+    return <{{MODULE_PASCAL}}Page />;
+}
