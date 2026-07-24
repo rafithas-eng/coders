@@ -1,5 +1,5 @@
 {
-  "name": "@novo-projeto/frontend",
+  "name": "@poupig/frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,12 +9,13 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "next": "16.2.7",
+    "@poupig/auth": "*",
+    "@poupig/reports": "*",
+    "@poupig/shared": "*",
+    "@poupig/transactions": "*",
+    "next": "16.2.1",
     "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "@novo-projeto/transaction": "*",
-    "@novo-projeto/reports": "*",
-    "@novo-projeto/auth": "*"
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -22,7 +23,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.7",
+    "eslint-config-next": "16.2.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

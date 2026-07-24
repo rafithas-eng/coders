@@ -1,3 +1,3 @@
 export default function ReportsComponent() {
-  return <div>Reports</div>;
+  return <h1>Reports Component</h1>;
 }

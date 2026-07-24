@@ -1,3 +1,3 @@
-export function hello() {
-  return 'hello world'
+export function getModuleName(): string {
+  return 'reports';
 }

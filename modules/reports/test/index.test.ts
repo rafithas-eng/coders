@@ -1,5 +1,5 @@
-import { hello } from '../src/index'
+import { getModuleName } from "../src/index";
 
-test('hello returns string', () => {
-  expect(hello()).toBe('hello world')
-})
+test("Deve retornar o nome do modulo configurado", () => {
+  expect(getModuleName()).toBe("reports");
+});

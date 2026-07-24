@@ -1,5 +1,0 @@
-import {{MODULE_PASCAL}}Component from "../components/{{MODULE}}.component";
-
-export default function {{MODULE_PASCAL}}Page() {
-  return <{{MODULE_PASCAL}}Component />;
-}

@@ -1,5 +1,7 @@
-export function somar(a: number, b: number): number {
-    return a + b;   
+export function getModuleName(): string {
+  return "auth";
 }
 
-export {somar as sum};
+export * from "./user/model";
+export * from "./user/provider";
+export * from "./user/usecase";

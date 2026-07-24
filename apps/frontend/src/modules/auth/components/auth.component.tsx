@@ -1,3 +1,3 @@
 export default function AuthComponent() {
-  return <div>Auth</div>;
+  return <h1>Auth Component</h1>;
 }

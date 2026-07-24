@@ -1,9 +1,0 @@
-import { Controller, Get } from '@nestjs/common';
-
-@Controller('{{MODULE}}')
-export class {{MODULE_PASCAL}}Controller {
-  @Get()
-  getHello(): string {
-    return '{{MODULE_PASCAL}} module is working!';
-  }
-}
