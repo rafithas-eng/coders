@@ -1,0 +1,25 @@
+@baseUrl = http://localhost:4000
+@contentType = application/json
+
+### Health check do modulo auth
+GET {{baseUrl}}/auth/
+
+### Registrar usuario com payload valido
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "name": "Joao Silva",
+  "email": "joao.silva@example.com",
+  "password": "Strong@123"
+}
+
+### Registrar usuario com senha fraca para validar erro 422
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "name": "Joao Silva",
+  "email": "joao.silva+weak@example.com",
+  "password": "123456"
+}

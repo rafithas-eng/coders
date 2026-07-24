@@ -1,8 +1,9 @@
-export default {
+import type { Config } from 'jest';
+
+const config: Config = {
+  verbose: true,
   preset: 'ts-jest',
-  testEnvironment: 'node',
-  roots: ['<rootDir>/test'],
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest'
-  }
-}
+  testMatch: ['**/test/**/*.test.ts'],
+};
+
+export default config;

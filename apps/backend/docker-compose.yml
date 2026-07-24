@@ -1,0 +1,24 @@
+name: poupig-novo-projeto-backend-db
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: poupig-novo-projeto-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: poupig_novo_projeto
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: poupig_novo_projeto_db
+    ports:
+      - '5685:5432'
+    volumes:
+      - poupig-novo-projeto-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U poupig_novo_projeto']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  poupig-novo-projeto-postgres-data:
+    driver: local
